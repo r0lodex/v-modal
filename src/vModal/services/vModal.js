@@ -24,18 +24,18 @@ function vModalFactory ($animate, $compile, $rootScope, $controller, $q, $http, 
         html,
         scope;
 
-    if (config.template) {
-      html = $q.when(config.template);
-    } else {
-      html = $http.get(config.templateUrl, {
-        cache: $templateCache
-      }).
-      then(function (response) {
-        return response.data;
-      });
-    }
-
     function activate (locals) {
+      if (config.template) {
+        html = $q.when(config.template);
+      } else {
+        html = $http.get(config.templateUrl, {
+          cache: $templateCache
+        }).
+        then(function (response) {
+          return response.data;
+        });
+      }
+      
       return html.then(function (html) {
         if (!element) {
           attach(html, locals);
